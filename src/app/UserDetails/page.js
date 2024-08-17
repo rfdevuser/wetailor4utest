@@ -83,7 +83,7 @@ const Form = () => {
     dispatch(updateFormData({ fieldName: name, fieldValue: value }));
   };
   return (
-<section className="bg-pink-500 flex items-center justify-center h-auto" style={{ backgroundImage: `url('/Backgrounds/loginbg.jpg')`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+<section className="bg-pink-500 flex items-center justify-center h-auto">
   <div className="w-100 flex flex-col items-center gap-6 rounded-lg p-4 border-black shadow-xl bg-opacity-75 backdrop-filter backdrop-blur-md mt-6 mb-6" style={{ maxWidth: '400px', margin: 'auto', padding: '20px', border: '1px solid #ccc', borderRadius: '8px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
   <h1 className="text-center leading-normal text-white font-medium text-3xl mb-6">
               Welcome to <br /> We Tailor 4 U
