@@ -1,0 +1,37 @@
+.home-slider-container {
+    width: 100%;
+    margin-top: 10px;
+    overflow: hidden;
+  }
+  
+  .home-slider {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; /* Enables smooth scrolling on iOS */
+    scroll-snap-type: x mandatory; /* Enables snapping to each card */
+    -ms-overflow-style: none; /* Hides scrollbar on Edge */
+    scrollbar-width: none; /* Hides scrollbar on Firefox */
+  }
+  
+  .home-slider::-webkit-scrollbar {
+    display: none; /* Hides scrollbar on Chrome/Safari */
+  }
+  
+  .home-slider-item {
+    flex: 0 0 auto;
+    scroll-snap-align: start; /* Ensures cards snap into view */
+    margin-right: 10px; /* Adjust spacing between cards */
+  }
+  
+  /* Adjust card width as needed */
+  .home-slider-item > div {
+    width: 200px; /* Example width */
+  }
+  .container {
+    @apply bg-gray-200;
+  }
+  
+  .devLogo {
+    @apply flex items-center justify-center text-5xl text-gray-300 h-screen;
+  }
