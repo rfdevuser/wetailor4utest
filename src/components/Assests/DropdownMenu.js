@@ -2,8 +2,9 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import {  auth } from "@/firebase.config"
 
-import { resetFormData } from '@/redux/reducers/form.reducer';
+
 import {  signOut } from 'firebase/auth';
+import { resetFormData } from '@/redux/reducers/form.reducer';
 const DropdownMenu = () => {
   const dispatch = useDispatch();
   const handleLogout = async () => {
