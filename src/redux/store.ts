@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import fabricReducer from './reducers/fabricSlice';
-import formReducer from './reducers/form.reducer';
+import formReducer from './reducers/formReducer';
 import rootReducer from './rootReducer'
 const store = configureStore({
   reducer: rootReducer,

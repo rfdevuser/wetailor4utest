@@ -4,7 +4,7 @@ import {  auth } from "@/firebase.config"
 
 
 import {  signOut } from 'firebase/auth';
-import { resetFormData } from '@/redux/reducers/form.reducer';
+import { resetFormData } from '@/redux/reducers/formReducer';
 const DropdownMenu = () => {
   const dispatch = useDispatch();
   const handleLogout = async () => {

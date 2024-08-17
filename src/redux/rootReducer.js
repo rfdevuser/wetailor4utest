@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 // import fabricReducer from './reducers/FabricReducer';
-import formReducer from './reducers/form.reducer';
+import formReducer from './reducers/formReducer';
 import productSlice from './reducers/productSlice';
 
 // Combine all reducers

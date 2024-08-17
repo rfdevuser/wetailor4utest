@@ -4,7 +4,7 @@
 import { useState } from 'react';
 import geolib from 'geolib';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateFormData } from  '@/redux/reducers/form.reducer'; 
+import { updateFormData } from  '@/redux/reducers/formReducer'; 
 import { useRouter } from 'next/navigation';
 
 const Form = () => {
