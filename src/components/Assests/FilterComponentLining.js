@@ -37,7 +37,7 @@ const FilterComponent = ({setFilterValue}) => {
 
   return (
     <div className='container'>
-      <div className='bg-transparent shadow-xl width-150 mt-2 flex justify-items-center  flex-wrap  gap-20   p-10 mx-auto border-2 border-black text-bold' style={{ maxHeight: '500px', maxWidth:'250px', overflowY: 'auto' }}>
+      <div className='bg-white shadow-xl width-150 mt-2 flex justify-items-center  flex-wrap  gap-20   p-10 mx-auto border-2 border-black text-bold' style={{ maxHeight: '500px', maxWidth:'250px', overflowY: 'auto' }}>
         <div key="noFilter" className='bg-red'>
           <input type="radio" id={`noFilter`} name="fabricType" value={null} onChange={() => handleFilterChange(null)}/>
           <label htmlFor={`noFilter`}><strong>NO FILTER</strong></label> {/* Option for no filter */}

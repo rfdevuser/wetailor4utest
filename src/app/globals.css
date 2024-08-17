@@ -6,7 +6,7 @@
 
 body {
 
-    background-color: white;
+    background-color: white !important;
     color: black;
     margin-left: 55px;
 }

@@ -42,7 +42,7 @@ const FabricCard = ({ image, name, slug , price ,setSingleProduct
       className={`relative w-full h-auto max-w-xs rounded-lg overflow-hidden cursor-pointer transition-transform duration-300 ${isVisible ? 'card-visible' : 'card-hidden'}`}
       onClick={handleOnClick}
     >
-      <div className="relative group cursor-pointer overflow-hidden duration-500 bg-transparent text-gray-50 p-4 mt-4 transform hover:scale-105 hover:shadow-lg transition-transform">
+      <div className="relative group cursor-pointer overflow-hidden duration-500 bg-white text-gray-50 p-4 mt-4 transform hover:scale-105 hover:shadow-lg transition-transform">
         <div
           className="relative w-full bg-cover bg-center bg-no-repeat rounded-lg transition-transform duration-300 group-hover:scale-110 sm:group-hover:scale-105 md:group-hover:scale-110 lg:group-hover:scale-110"
           style={{

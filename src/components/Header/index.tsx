@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import SearchBox from '../Assests/SearchBox';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateFormData } from '@/redux/reducers/form.reducer';
+import { updateFormData } from '@/redux/reducers/formReducer';
 import DropdownMenu from '@/components/Assests/DropdownMenu'
 
 
@@ -120,8 +120,8 @@ const NavBar: React.FC = () => {
 
         {/* Search Box */}
         <div className='w-full border-t border-white'></div>
-        <div className='bg-transparent'>
-          <div className='w-full flex justify-center text-black bg-transparent shadow-xl mt-1 mb-1'>
+        <div className='bg-white'>
+          <div className='w-full flex justify-center text-black bg-white shadow-xl mt-1 mb-1'>
             <div className='lg:w-1/2 md:w-full sm:w-full'>
               <SearchBox />
             </div>
