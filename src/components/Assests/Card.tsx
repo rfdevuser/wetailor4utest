@@ -1,27 +1,64 @@
-import React from 'react';
+"use client";
+import React, { useState } from 'react';
 import Image from 'next/image';
+import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
 
-const Card: React.FC<{ title: string , image: string }> = ({ title , image }) => {
+interface Subcategory {
+  name: string;
+  link: string;
+}
+
+interface CardProps {
+  title: string;
+  image: string;
+  subcategories: Subcategory[];
+}
+
+const Card: React.FC<CardProps> = ({ title, image, subcategories }) => {
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
-    <div className="transform transition duration-300 hover:scale-110 rounded-lg  h-35 w-20 hover:shadow-xl bg-white  mt-5">
-      <div className="flex flex-col justify-center items-center h-full">
-      <style jsx>{`
-    .rounded-image {
-      border-radius: 100%; /* Makes the image round */
-      overflow: hidden; /* Ensures the image is completely contained within the rounded border */
-    }
-  `}</style>
-  <div className="rounded-image">
-        <Image
-          src={image}
-          alt='wetailor4u_logo'
-          width={40}
-          height={50}
-        />
-   </div>
-      <div className="px-1 pt-2 flex flex-col">
-        <h2 className="font-semibold">{title}</h2>
-      </div>
+    <div
+      className="relative bg-white mt-5 mb-10 p-5 rounded-lg shadow-lg transition-transform duration-300 z-10"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div className="flex flex-col items-center">
+        <div className="relative w-36 h-48 rounded-full overflow-hidden">
+          <Image
+            src={image}
+            alt={title}
+            layout="fill"
+            objectFit="cover"
+            className={`transition-transform duration-300 ${isHovered ? 'scale-110' : 'scale-100'}`}
+            loading="lazy"
+          />
+        </div>
+        <div className="px-1 pt-2 flex flex-col items-center">
+          <h2 className="font-semibold text-lg">{title}</h2>
+        </div>
+
+        <div
+          className={`absolute top-full left-1/2 transform -translate-x-1/2 w-full flex justify-center items-center transition-transform duration-300 ${isHovered ? 'rotate-180' : 'rotate-0'}`}
+        >
+          {isHovered ? <FiChevronUp className="text-xl text-gray-600" /> : <FiChevronDown className="text-xl text-gray-600" />}
+        </div>
+
+        {isHovered && (
+          <div className="submenu-container">
+            <div className="submenu-content">
+              {subcategories.map((subcategory, index) => (
+                <a
+                  key={index}
+                  href={subcategory.link}
+                  className="submenu-item"
+                >
+                  <p className="text-lg font-semibold text-gray-800">{subcategory.name}</p>
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

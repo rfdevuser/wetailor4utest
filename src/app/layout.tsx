@@ -17,7 +17,14 @@ const navigationData = [
   { name: "Blouse Designs", link: "/MTM_Blouse" },
   { name: "Main Fabric Store", link: "/Fabric_Store" },
   { name: "Lining Fabric Store", link: "/Lining_Store" },
-  { name: "Saved", link: "/saved" },
+  { name: "BEAUTY & SPA", link: "/B2BsubCategoryPage/1" },
+  { name: "HOSPITAL", link: "/B2BsubCategoryPage/2" },
+  { name: "HOTEL", link: "/B2BsubCategoryPage/3" },
+  { name: "RESTAURANT & BAR", link: "/B2BsubCategoryPage/4" },
+  { name: "SCHOOL UNIFORMS", link: "/B2BsubCategoryPage/5" },
+  { name: "COLLEGE UNIFORMS", link: "/B2BsubCategoryPage/6" },
+  { name: "CORPORATE UNIFORMS", link: "/B2BsubCategoryPage/7" },
+  
 ];
 
 

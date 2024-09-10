@@ -6,7 +6,11 @@ import {
   BsFillHandbagFill,
   BsFillStarFill,
   BsHouseFill,
+  
 } from "react-icons/bs";
+import { FaSpa ,FaHospital ,FaHotel ,FaSchool , } from "react-icons/fa";
+
+import { MdFoodBank ,MdOutlineCorporateFare  } from "react-icons/md";
 import { RiSettings4Fill } from "react-icons/ri";
 import { FaRegBell } from "react-icons/fa";
 import classNames from "classnames";
@@ -38,6 +42,20 @@ const Sidebar: React.FC<SidebarProps> = ({ navigationData }) => {
         return <BsFillHandbagFill />;
       case "Saved":
         return <IoBookmark />;
+        case "BEAUTY & SPA":
+          return <FaSpa />;
+          case "HOSPITAL":
+            return <FaHospital  />;
+            case "HOTEL":
+              return <FaHotel   />;
+              case "RESTAURANT & BAR":
+                return <MdFoodBank    />;
+                case "SCHOOL UNIFORMS":
+                  return <FaSchool     />;
+                  case "COLLEGE UNIFORMS":
+                    return <FaSchool     />;
+                    case "CORPORATE UNIFORMS":
+                      return <MdOutlineCorporateFare      />;
       default:
         return null;
     }
@@ -50,8 +68,9 @@ const Sidebar: React.FC<SidebarProps> = ({ navigationData }) => {
   return (
     <nav
       className={classNames([
-        "fixed left-0 top-0 bottom-0 z-50 bg-gradient-to-br from-[#FACBEA] to-[#FFE4D6] flex flex-col justify-between items-center py-6 rounded-tr-4xl rounded-br-4xl",
+        "fixed left-0  top-0 bottom-0 z-50 bg-[#f1f5f9] flex flex-col justify-between items-center py-6 rounded-tr-4xl rounded-br-4xl",
         expanded ? "w-40" : "w-14",
+        "overflow-y-auto scrollbar-thin scrollbar-thumb-red-500 scrollbar-track-gray-200",
       ])}
     >
       <span
@@ -60,7 +79,7 @@ const Sidebar: React.FC<SidebarProps> = ({ navigationData }) => {
       >
         ☰
       </span>
-      <span className="text-4xl text-gray-800 transform transition duration-300 hover:scale-110 hower:shadow-xl">
+      <span className="text-4xl text-gray-800 transform transition duration-300 hover:scale-110 hower:shadow-xl mt-8">
         <Image src="/images/logo/logo-4u.png" alt="wetailor4u_logo" width={80} height={60} />
       </span>
       <ul className="flex flex-col items-left w-full">

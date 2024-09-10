@@ -15,7 +15,7 @@ const MTM_Blouses = () => {
       mafter: null,
     },
   });
-console.log(data);
+
   return (
     <>
   

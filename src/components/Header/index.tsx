@@ -1,14 +1,14 @@
-"use client"
+"use client";
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import SearchBox from '../Assests/SearchBox';
-import { useDispatch, useSelector } from 'react-redux';
 import { updateFormData } from '@/redux/reducers/formReducer';
-import DropdownMenu from '@/components/Assests/DropdownMenu'
+import DropdownMenu from '@/components/Assests/DropdownMenu';
 
-
+// NavBar Component
 const NavBar: React.FC = () => {
   const [navbarOpen, setNavbarOpen] = useState(false);
   const [sticky, setSticky] = useState(false);
@@ -17,18 +17,17 @@ const NavBar: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState(-1);
   const [showDropdown, setShowDropdown] = useState(false);
   const dispatch = useDispatch();
-  const handleMouseEnter = () => {
-    setShowDropdown(true);
-  };
+  const cart = useSelector((state: any) => state.cart.cart); // Access cart state
+  const userName = useSelector((state: any) => state.form.formData.name);
 
-  const handleMouseLeave = () => {
-    setShowDropdown(false);
-  };
-  const handleNavLinkClick = () => {
-    // Close the mobile menu when a nav link is clicked
-    setNavbarOpen(false);
-  };
+  // Handle mouse enter and leave for dropdown
+  const handleMouseEnter = () => setShowDropdown(true);
+  const handleMouseLeave = () => setShowDropdown(false);
 
+  // Close mobile menu when a nav link is clicked
+  const handleNavLinkClick = () => setNavbarOpen(false);
+
+  // Sticky navbar
   const handleStickyNavbar = () => {
     if (window.scrollY >= 80) {
       setSticky(true);
@@ -44,24 +43,14 @@ const NavBar: React.FC = () => {
     };
   }, []);
 
-  // Fetch username from Redux store
-  const userName = useSelector((state: any) => state.form.formData.name);
-
+  // Load and update username from localStorage
   useEffect(() => {
-    // Load username from localStorage if available
     const storedName = localStorage.getItem('userName');
     if (storedName) {
-      // Set username in Redux store or wherever you manage state
-      dispatch(
-        updateFormData({
-          fieldName: 'name', // Ensure this matches the field name in your reducer
-          fieldValue: storedName,
-        })
-      );
+      dispatch(updateFormData({ fieldName: 'name', fieldValue: storedName }));
     }
-  }, []);
+  }, [dispatch]);
 
-  // Update localStorage when userName changes
   useEffect(() => {
     if (userName) {
       localStorage.setItem('userName', userName);
@@ -70,11 +59,15 @@ const NavBar: React.FC = () => {
     }
   }, [userName]);
 
+  // Calculate the number of items in the cart
+  const itemCount = cart.length;
+
   return (
     <nav>
       <div className={`relative ${sticky ? 'sticky top-0 z-50' : ''}`}>
         {/* Top Section: Logo, Login, and Cart Buttons */}
-        <div className='bg-gradient-to-br from-[#FACBEA] to-[#FFE4D6]'>
+        {/* <div className='bg-gradient-to-br from-[#FACBEA] to-[#FFE4D6]'> */}
+        <div className='bg-[#f1f5f9]'>
           <div className="flex justify-between items-center py-2">
             <div className="text-white text-xl font-bold flex items-center mx-auto">
               <Image
@@ -87,8 +80,12 @@ const NavBar: React.FC = () => {
             <div className="flex items-center space-x-4">
               {userName ? (
                 // If userName is available (user is logged in), show welcome message
-                <span className="text-black text-sm mr-2" onMouseEnter={handleMouseEnter}
-                  onMouseLeave={handleMouseLeave} ><b>Welcome {userName}</b>
+                <span
+                  className="text-black text-sm mr-2"
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}
+                >
+                  <b>Welcome {userName}</b>
                   {showDropdown && <DropdownMenu />}
                 </span>
               ) : (
@@ -105,15 +102,23 @@ const NavBar: React.FC = () => {
                   </button>
                 </Link>
               )}
-              <button className="text-white bg-[#e2e2e2] px-2 py-1 rounded-full hover:bg-[#fda4af]">
-                <Image
-                  src='/images/icons/add-to-cart.png'
-                  alt='cart_logo'
-                  width={30}
-                  height={30}
-                  loading='lazy'
-                />
-              </button>
+              <Link href='/Cart'>
+                <button className="relative text-white bg-[#e2e2e2] px-2 py-1 rounded-full hover:bg-[#fda4af]">
+                  <Image
+                    src='/images/icons/add-to-cart.png'
+                    alt='cart_logo'
+                    width={30}
+                    height={30}
+                    loading='lazy'
+                  />
+                  {/* Display item count badge */}
+                  {itemCount > 0 && (
+                    <span className="absolute top-0 right-0 -mt-1 -mr-1 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5">
+                      {itemCount}
+                    </span>
+                  )}
+                </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -122,7 +127,7 @@ const NavBar: React.FC = () => {
         <div className='w-full border-t border-white'></div>
         <div className='bg-white'>
           <div className='w-full flex justify-center text-black bg-white shadow-xl mt-1 mb-1'>
-            <div className='lg:w-1/2 md:w-full sm:w-full'>
+            <div className='lg:w-1/2 md:w-full sm:w-full '>
               <SearchBox />
             </div>
           </div>
