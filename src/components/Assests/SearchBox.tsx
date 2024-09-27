@@ -10,7 +10,7 @@ const SearchBox: React.FC = () => {
       </svg>
     </span>
     <input name="episodequery" id="title" className="border-white outline-none border-0 w-full rounded-xl p-2" type="text" placeholder="What are you looking for?" />
-    <button type="submit" className="bg-gradient-to-br from-[#F97794] to-[#623AA2] hover:[#fecdd3] rounded-xl text-white text-xl p-2 pl-4 pr-4 ml-2">
+    <button type="submit" className="bg-[#0f172a] hover:[#fecdd3] rounded-xl text-white text-xl p-2 pl-4 pr-4 ml-2">
       <p className="font-semibold text-xs">Search</p>
     </button>
   </div>

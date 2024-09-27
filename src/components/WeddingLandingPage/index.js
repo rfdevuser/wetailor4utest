@@ -6,7 +6,7 @@ import Link from 'next/link'
 import React from 'react'
 
 
-const displayName = name.split('-')[0];
+
 const Shimmer = () => (
   <div className="flex   gap-4 p-4">
     {[...Array(6)].map((_, index) => (
@@ -92,7 +92,7 @@ const WeddingLandingPage = () => {
         </div>
 
         <div className='w-full lg:w-2/4 flex items-center justify-center'>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
   <Card image="/Backgrounds/wedding/haldi1.png" id='haldi'/>
   <Card image="/Backgrounds/wedding/mehendi1.png" id='mehendi'/>
   <Card image="/Backgrounds/wedding/reception1.png" id='reception'/>
@@ -124,7 +124,7 @@ const WeddingLandingPage = () => {
         )}
 
       </div>
-      <div className='flex justify-center text-blue-800'>
+      <div className='flex justify-center text-blue-800 mb-6'>
         <Link href='/MTM_Blouse'><u>View more ⬇️</u></Link>
       </div>
       </div>

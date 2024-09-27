@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import { IoLogoEdge, IoBookmark } from "react-icons/io5";
 import {
   BsImageFill,
@@ -29,7 +29,7 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ navigationData }) => {
   const [currentRoute, setCurrentRoute] = useState("Home");
   const [expanded, setExpanded] = useState(false);
-
+  const sidebarRef = useRef<HTMLDivElement>(null);
   const renderIcon = useCallback((element: NavigationItem) => {
     switch (element.name) {
       case "Home":
@@ -64,15 +64,30 @@ const Sidebar: React.FC<SidebarProps> = ({ navigationData }) => {
   const toggleSidebar = () => {
     setExpanded(!expanded);
   };
-
+  const handleClickOutside = (event: MouseEvent) => {
+    if (sidebarRef.current && !sidebarRef.current.contains(event.target as Node)) {
+      console.log('Clicked outside');
+      setExpanded(false);
+    }
+  };
+  
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+  
   return (
     <nav
-      className={classNames([
-        "fixed left-0  top-0 bottom-0 z-50 bg-[#f1f5f9] flex flex-col justify-between items-center py-6 rounded-tr-4xl rounded-br-4xl",
-        expanded ? "w-40" : "w-14",
-        "overflow-y-auto scrollbar-thin scrollbar-thumb-red-500 scrollbar-track-gray-200",
-      ])}
-    >
+    ref={sidebarRef}
+    className={classNames([
+      "fixed left-0 top-0 bottom-0 z-50 bg-[#f1f5f9] flex flex-col justify-between items-center py-6 rounded-tr-4xl rounded-br-4xl",
+      expanded ? "w-40" : "w-14",
+      "overflow-y-auto scrollbar-thin scrollbar-thumb-red-500 scrollbar-track-gray-200",
+    ])}
+  >
+  
       <span
         className="transform transition duration-300 hover:scale-110 hower:shadow-xl text-3xl text-black-800 hover:text-gray-800 cursor-pointer"
         onClick={toggleSidebar}

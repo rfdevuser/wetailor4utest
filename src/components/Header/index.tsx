@@ -18,7 +18,11 @@ const NavBar: React.FC = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const dispatch = useDispatch();
   const cart = useSelector((state: any) => state.cart.cart); // Access cart state
-  const userName = useSelector((state: any) => state.form.formData.name);
+  const userName = useSelector((state: any) => {
+    const fullName = state.form.formData.name;
+    return fullName ? fullName.split(' ')[0] : '';
+});
+
 
   // Handle mouse enter and leave for dropdown
   const handleMouseEnter = () => setShowDropdown(true);
@@ -60,8 +64,11 @@ const NavBar: React.FC = () => {
   }, [userName]);
 
   // Calculate the number of items in the cart
-  const itemCount = cart.length;
+ 
+  const cartItems = useSelector((state: any) => state.cart.items); // Adjust this based on your state structure
 
+  // Calculate the number of items in the cart
+  const itemCount = cartItems ? cartItems.length : 0;
   return (
     <nav>
       <div className={`relative ${sticky ? 'sticky top-0 z-50' : ''}`}>
@@ -69,7 +76,7 @@ const NavBar: React.FC = () => {
         {/* <div className='bg-gradient-to-br from-[#FACBEA] to-[#FFE4D6]'> */}
         <div className='bg-[#f1f5f9]'>
           <div className="flex justify-between items-center py-2">
-            <div className="text-white text-xl font-bold flex items-center mx-auto">
+            <div className="text-white text-xl font-bold flex items-center mx-auto justify-center">
               <Image
                 src='/images/logo/logo-4u.png'
                 alt='wetailor4u_logo'
@@ -85,7 +92,7 @@ const NavBar: React.FC = () => {
                   onMouseEnter={handleMouseEnter}
                   onMouseLeave={handleMouseLeave}
                 >
-                  <b>Welcome {userName}</b>
+                  <b><u>Welcome {userName} 🔻</u></b>
                   {showDropdown && <DropdownMenu />}
                 </span>
               ) : (
@@ -103,6 +110,11 @@ const NavBar: React.FC = () => {
                 </Link>
               )}
               <Link href='/Cart'>
+              {itemCount > 0 && (
+                    <div className="absolute top-0 right-0 -mt-1 -mr-1 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5">
+                      {itemCount}
+                    </div>
+                  )}
                 <button className="relative text-white bg-[#e2e2e2] px-2 py-1 rounded-full hover:bg-[#fda4af]">
                   <Image
                     src='/images/icons/add-to-cart.png'
@@ -112,11 +124,7 @@ const NavBar: React.FC = () => {
                     loading='lazy'
                   />
                   {/* Display item count badge */}
-                  {itemCount > 0 && (
-                    <span className="absolute top-0 right-0 -mt-1 -mr-1 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5">
-                      {itemCount}
-                    </span>
-                  )}
+                
                 </button>
               </Link>
             </div>

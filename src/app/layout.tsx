@@ -9,8 +9,9 @@ import { ApolloProvider } from '@apollo/client';
 import client from '@/utils/apollo/ApolloClient';
 import { Provider } from "react-redux";
 import store from '@/redux/store'
-
-
+import HelpWidget from '@/components/HelpWidget'
+import AuthChecker from '@/components/AuthExpiryChecker/AuthChecker'
+import ChatLandingPage from '@/components/ChatLandingPage'
 const inter = Inter({ subsets: ["latin"] });
 const navigationData = [
   { name: "Home", link: "/" },
@@ -42,12 +43,18 @@ export default function RootLayout({
       <body className={`bg-white dark:bg-black ${inter.className}`}>
       <Provider store={store}>
       <ApolloProvider client={client}>
-   
+      <AuthChecker>
+      
           <Header />
+          
         <Sidebar navigationData={navigationData}  />
        
           {children}
+         
           <Footer/>
+       
+          <ChatLandingPage/>
+          </AuthChecker>
           </ApolloProvider>
           </Provider>
         </body>

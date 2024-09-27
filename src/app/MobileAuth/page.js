@@ -4,13 +4,12 @@ import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth
 import { useRouter } from "next/navigation";
 import { app } from "@/firebase.config";
 
-// Sample country codes
+// Sample country codes 
 const countryCodes = [
   { code: "+91", name: "India" },
   { code: "+1", name: "United States" },
   { code: "+44", name: "United Kingdom" }
- 
-  // Add more country codes as needed
+  // Add more country codes as needed 
 ];
 
 export default function Login() {
@@ -20,7 +19,7 @@ export default function Login() {
   const [otpSent, setOtpSent] = useState(false);
   const [sendingOtp, setSendingOtp] = useState(false);
   const [verifyingOtp, setVerifyingOtp] = useState(false);
-  const [selectedCountryCode, setSelectedCountryCode] = useState(countryCodes[0].code); // Default to the first country code
+  const [selectedCountryCode, setSelectedCountryCode] = useState(countryCodes[0].code); // Default to the first country code 
 
   const auth = getAuth(app);
   const router = useRouter();
@@ -33,10 +32,10 @@ export default function Login() {
     const recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
       size: 'normal',
       callback: (response) => {
-        // Handle recaptcha success if needed
+        // Handle recaptcha success if needed 
       },
       'expired-callback': () => {
-        // Handle recaptcha expiration if needed
+        // Handle recaptcha expiration if needed 
       }
     });
     window.recaptchaVerifier = recaptchaVerifier;
@@ -55,8 +54,11 @@ export default function Login() {
   };
 
   const handleSendOtp = async () => {
-    setSendingOtp(true); // Start the sending OTP state
+    setSendingOtp(true); // Start the sending OTP state 
     try {
+      // Verify reCAPTCHA
+      await window.recaptchaVerifier.verify();
+
       const formattedPhoneNumber = phoneNumber.replace(/\D/g, '');
       const fullPhoneNumber = `${selectedCountryCode}${formattedPhoneNumber}`;
 
@@ -64,17 +66,18 @@ export default function Login() {
       setConfirmationResult(confirmation);
       setOtpSent(true);
       setPhoneNumber('');
+    
       alert('OTP has been sent');
     } catch (error) {
       console.error('Error sending OTP:', error);
       alert('Failed to send OTP. Please check the phone number and try again.');
     } finally {
-      setSendingOtp(false); // End the sending OTP state
+      setSendingOtp(false); // End the sending OTP state 
     }
   };
 
   const handleOTPSubmit = async () => {
-    setVerifyingOtp(true); // Start the verifying OTP state
+    setVerifyingOtp(true); // Start the verifying OTP state 
     try {
       if (!confirmationResult) {
         alert('No OTP sent. Please send OTP first.');
@@ -83,20 +86,46 @@ export default function Login() {
 
       const userCredential = await confirmationResult.confirm(otp);
       console.log(userCredential);
+      const user = userCredential.user;
+      // Store user ID and token in localStorage
+      const token = await user.getIdToken(); // Get the ID token
+      localStorage.setItem('userId', user.uid);
+      localStorage.setItem('token', token);
+      localStorage.setItem('phoneNumber', user.phoneNumber);
+      // Store the current timestamp
+      const expirationDate = new Date().getTime() + 30 * 24 * 60 * 60 * 1000; // 30 days in milliseconds
+      localStorage.setItem('tokenExpiration', expirationDate);
+
       setOtp('');
       router.push('/UserDetails');
     } catch (error) {
       console.error('Error confirming OTP:', error);
       alert('Invalid OTP. Please try again.');
     } finally {
-      setVerifyingOtp(false); // End the verifying OTP state
+      setVerifyingOtp(false); // End the verifying OTP state 
     }
   };
 
   return (
-    <div className="container mx-auto p-4 max-w-md">
+<>
+
+    <div className='h-screen flex items-center justify-center ' style={{ 
+      backgroundImage: "url('/Backgrounds/loginbackground7.jpg')", 
+      backgroundSize: 'cover', 
+      backgroundRepeat: 'no-repeat', 
+      backgroundPosition: 'center' 
+    }} >
+    
+    <div className="container mx-auto p-12 max-w-md border-double border-4 border-white  bg-opacity-100 backdrop-filter backdrop-blur-lg rounded-md" >
+    <div className="text-white flex justify-center items-center mb-10 h-20 " style={{ 
+      backgroundImage: "url('/Backgrounds/loginbackground8.jpg')", 
+      backgroundSize: 'cover', 
+      backgroundRepeat: 'no-repeat', 
+      backgroundPosition: 'center', 
+     
+    }}><b>Welcome to WeTailor4U</b> </div>
       {!otpSent && <div id="recaptcha-container" className="mb-4"></div>}
-      
+
       {!otpSent ? (
         <>
           <div className="mb-4">
@@ -137,10 +166,12 @@ export default function Login() {
       <button
         onClick={otpSent ? handleOTPSubmit : handleSendOtp}
         className={`text-white p-2 rounded-md w-full ${otpSent ? 'bg-green-500 hover:bg-green-600' : 'bg-blue-500 hover:bg-blue-600'} flex items-center justify-center`}
-        disabled={sendingOtp || verifyingOtp} // Disable button while sending OTP or verifying OTP
+        disabled={sendingOtp || verifyingOtp} // Disable button while sending OTP or verifying OTP 
       >
         {sendingOtp ? 'Sending OTP...' : verifyingOtp ? 'Verifying...' : otpSent ? 'Submit OTP' : 'Send OTP'}
       </button>
     </div>
+    </div>
+    </>
   );
 }

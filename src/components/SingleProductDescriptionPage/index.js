@@ -485,6 +485,7 @@ const SingleProductDescriptionPage = ({ products }) => {
   liningFabricPrice={localSelectedLinigFabric?.price}
   productImage={products.image.sourceUrl}
   productID={productID}
+  RegularPrice={selectedRegularPrice}
 />
 
 

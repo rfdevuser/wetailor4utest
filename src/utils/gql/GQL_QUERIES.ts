@@ -213,3 +213,25 @@ export const GET_BLOUSE_PRODUCT_BY_ID = gql`
 }
 
 `;
+
+
+
+export const GET_CUSTOMER_ADDRESSES_BY_USER_ID = gql`
+  query MyQuery($userId: String!) {
+    wetailor4uCustomerAddressesByUserId(userId: $userId) {
+      address_title
+      city
+      contact_no
+      door_no
+      firstname
+      id
+      landmark
+      lastname
+      pincode
+      postal_address1
+      postal_address2
+      state
+      userId
+    }
+  }
+`;

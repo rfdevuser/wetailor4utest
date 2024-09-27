@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import {  auth } from "@/firebase.config"
 
@@ -7,22 +7,35 @@ import {  signOut } from 'firebase/auth';
 import { resetFormData } from '@/redux/reducers/formReducer';
 const DropdownMenu = () => {
   const dispatch = useDispatch();
+
+  const checkTokenExpiration = () => {
+    const tokenExpiration = localStorage.getItem('tokenExpiration');
+    if (tokenExpiration) {
+      const currentTime = new Date().getTime();
+      if (currentTime > tokenExpiration) {
+        handleLogout(); // Call logout if token is expired
+      }
+    }
+  };
+
+  useEffect(() => {
+    checkTokenExpiration(); // Check expiration on mount
+  }, []);
   const handleLogout = async () => {
     try {
       // Sign out from Firebase
-      await  await signOut(auth);
-  
-      // Clear localStorage
+      await signOut(auth);
       console.log("Successfully logged out");
+      
+      // Clear Redux form data
       dispatch(resetFormData());
-  
-      // Clear specific items from localStorage if necessary
+
+      // Clear localStorage
       localStorage.removeItem('accessToken'); // Replace with your relevant key
-      localStorage.clear(); // Use this only if you need to clear everything from localStorage
-  
-      // Redirect to login page or home page
-      router.push('/login'); // Adjust the path based on your routing setup
-  
+      localStorage.clear(); // Uncomment if you need to clear everything
+
+      // Redirect to login page
+      router.push('/'); // Ensure this path is correct
     } catch (error) {
       // Handle sign-out errors
       console.error('Error signing out:', error);
@@ -58,10 +71,10 @@ const DropdownMenu = () => {
         </a>
 
         <a
-          href="#"
+          href="/CustomerAddress"
           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
         >
-          Saved Addresses
+         Saved Address
         </a>
         <button
           onClick={handleLogout}
